@@ -58,10 +58,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ errorMessage: errors[0] });
     }
 
-    // validating that the user doesn;t already have an account by checking the email in the db, in this case in the arrawy belows
+    // validating that the user doesn't already have an account by checking the email in the db, in this case in the arrawy belows
 
-    // 40f08f6b58fe0f49ef1d22f1886aaa30   right
-    // ba2a56ba0c2dd5e593a8eb5d84afc7b9   wrong
     const user = [
       {
         firstName: "Anna",
@@ -101,8 +99,10 @@ export default async function handler(req, res) {
       .setExpirationTime("24H")
       .sign(secret);
 
-    res.status(200).json({
-      hello: token,
+    return res.status(200).json({
+      token: token,
     });
   }
+  // if the if statement is not satisfied
+  return res.status(404).json("Unknown endpoint");
 }
