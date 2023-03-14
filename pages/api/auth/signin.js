@@ -4,6 +4,7 @@ import * as jose from "jose";
 
 export default async function handler(req, res) {
   //  this is a POST request
+  console.log("Sign in Request");
   if (req.method === "POST") {
     // extract email and password from the body
     const { email, password } = req.body;
@@ -50,7 +51,7 @@ export default async function handler(req, res) {
       },
     ];
     const userWithEmail = user.find((el) => el.email === email);
-    console.log(userWithEmail.password);
+    // console.log(userWithEmail.password);
     // if (userWithEmail) {
     //   return res.status(400).json({ errorMessage: "User found" });
     // }
@@ -71,7 +72,7 @@ export default async function handler(req, res) {
       isMatch = true;
     }
 
-    console.log(isMatch);
+    // console.log(isMatch);
     // temporarily doing thsi way because I am not bcrypting and not saving the pw to the db, it's saved in this file locally without encription
     if (!isMatch) {
       return res
