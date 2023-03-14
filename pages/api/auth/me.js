@@ -1,11 +1,12 @@
 import * as jose from "jose";
+import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   // extracting jwt from the header
   const bearerToken = req.headers["authorization"];
   //   check if the header exists
   if (!bearerToken) {
-    res.status(401).json({
+    return res.status(401).json({
       errorMessage: "Unauthorized request (no bearer token)",
     });
   }
@@ -14,7 +15,7 @@ export default async function handler(req, res) {
   const token = bearerToken.split(" ")[1];
   // we do the same check for the token too
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       errorMessage: "Unauthorized request(no token)",
     });
   }
@@ -23,10 +24,53 @@ export default async function handler(req, res) {
   try {
     await jose.jwtVerify(token, secret);
   } catch (error) {
-    res.status(401).json({
+    return res.status(401).json({
       errorMessage: "Unauthorized request (token invalid)",
     });
   }
 
-  return res.json({ me: "Anna A" });
+  //   now that we've verified the token we use jwt to decode the token
+  const payload = jwt.decode(token);
+  if (!payload.email) {
+    return res.status(401).json({
+      errorMessage: "Unauthorized request (token invalid)",
+    });
+  }
+
+  const user = [
+    {
+      firstName: "Anna",
+      lastName: "An",
+      email: "anna@email.com",
+      phone: "111222333333",
+      city: "Seoul",
+      password: "password",
+    },
+    {
+      firstName: "Ben",
+      lastName: "B",
+      email: "anna1@email.com",
+      phone: "111222333333",
+      city: "Seoul",
+      password: "password",
+    },
+  ];
+
+  //   find the data from the db, we're do this locally for now
+  //   maybe reutn selectively, don't return the password for the real app
+  const userWithEmail = user.find((el) => el.email === payload.email);
+  return res.json({ userWithEmail });
+  //   this is what we get after this
+  // {
+  //     "userWithEmail": {
+  //         "firstName": "Anna",
+  //         "lastName": "An",
+  //         "email": "anna@email.com",
+  //         "phone": "111222333333",
+  //         "city": "Seoul",
+  //         "password": "password"
+  //     }
+  // }
+
+  //   return res.json({ me: payload });
 }
