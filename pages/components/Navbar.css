@@ -233,4 +233,9 @@ header label {
   width: 100%;
   border-radius: 0.25rem;
   border: none;
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: gray;
 }

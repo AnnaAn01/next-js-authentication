@@ -1,6 +1,6 @@
 "use client";
+import { useState, useEffect } from "react";
 
-import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -39,6 +39,29 @@ export default function AuthModal({ isSignin }) {
     password: "",
   });
 
+  const [disabled, setDisabled] = useState(true);
+  // we can use useEffect here because this is a client base component
+  // any time these inputs change, we want to run this useEffect
+  useEffect(() => {
+    if (isSignin) {
+      if (inputs.password && inputs.email) {
+        return setDisabled(false);
+      }
+    } else {
+      if (
+        inputs.firstName &&
+        inputs.lastName &&
+        inputs.email &&
+        inputs.phone &&
+        inputs.city &&
+        inputs.password
+      ) {
+        return setDisabled(false);
+      }
+    }
+    setDisabled(true);
+  }, [inputs]);
+
   return (
     <div>
       <button
@@ -71,9 +94,12 @@ export default function AuthModal({ isSignin }) {
                 handleChangeInput={handleChangeInput}
                 isSignin={isSignin}
               />
-              <button className="modal-last-button">{`${
-                isSignin ? "Sign In" : "Create Account"
-              }`}</button>
+              <button
+                className={
+                  disabled ? "modal-last-button disabled" : "modal-last-button"
+                }
+                disabled={disabled}
+              >{`${isSignin ? "Sign In" : "Create Account"}`}</button>
             </div>
           </div>
         </Box>
