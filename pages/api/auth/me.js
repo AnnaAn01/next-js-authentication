@@ -2,34 +2,36 @@ import * as jose from "jose";
 import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
-  // extracting jwt from the header
-  const bearerToken = req.headers["authorization"];
-  //   check if the header exists
-  if (!bearerToken) {
-    return res.status(401).json({
-      errorMessage: "Unauthorized request (no bearer token)",
-    });
-  }
-  // split the token from the Bearer token, right now it looke like this: Bearer slkdggjsldg/somerandomtoken/sdfsdfsdfsf
-  // we split on the space, and get the second element which is the 1st index
-  const token = bearerToken.split(" ")[1];
-  // we do the same check for the token too
-  if (!token) {
-    return res.status(401).json({
-      errorMessage: "Unauthorized request(no token)",
-    });
-  }
-  //   if we do have the above, then we get the secret we have in our env file
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-  try {
-    await jose.jwtVerify(token, secret);
-  } catch (error) {
-    return res.status(401).json({
-      errorMessage: "Unauthorized request (token invalid)",
-    });
-  }
+  // // extracting jwt from the header
+  // const bearerToken = req.headers["authorization"];
+  // //   check if the header exists
+  // if (!bearerToken) {
+  //   return res.status(401).json({
+  //     errorMessage: "Unauthorized request (no bearer token)",
+  //   });
+  // }
+  // // split the token from the Bearer token, right now it looke like this: Bearer slkdggjsldg/somerandomtoken/sdfsdfsdfsf
+  // // we split on the space, and get the second element which is the 1st index
+  // const token = bearerToken.split(" ")[1];
+  // // we do the same check for the token too
+  // if (!token) {
+  //   return res.status(401).json({
+  //     errorMessage: "Unauthorized request(no token)",
+  //   });
+  // }
+  // //   if we do have the above, then we get the secret we have in our env file
+  // const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+  // try {
+  //   await jose.jwtVerify(token, secret);
+  // } catch (error) {
+  //   return res.status(401).json({
+  //     errorMessage: "Unauthorized request (token invalid)",
+  //   });
+  // }
 
   //   now that we've verified the token we use jwt to decode the token
+  const bearerToken = req.headers["authorization"];
+  const token = bearerToken.split(" ")[1];
   const payload = jwt.decode(token);
   if (!payload.email) {
     return res.status(401).json({
