@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import AuthModalInputs from "./AuthModalInputs";
+import useAuth from "@/hooks/useAuth";
 
 const style = {
   position: "absolute",
@@ -22,6 +23,7 @@ export default function AuthModal({ isSignin }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { signin } = useAuth();
 
   const handleChangeInput = (e) => {
     setInputs({
@@ -62,6 +64,12 @@ export default function AuthModal({ isSignin }) {
     setDisabled(true);
   }, [inputs]);
 
+  const handleClick = () => {
+    if (isSignin) {
+      signin({ email: inputs.email, password: inputs.password });
+    }
+  };
+
   return (
     <div>
       <button
@@ -99,6 +107,7 @@ export default function AuthModal({ isSignin }) {
                   disabled ? "modal-last-button disabled" : "modal-last-button"
                 }
                 disabled={disabled}
+                onClick={handleClick}
               >{`${isSignin ? "Sign In" : "Create Account"}`}</button>
             </div>
           </div>
