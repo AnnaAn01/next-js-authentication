@@ -1,20 +1,10 @@
-/* body {
-  min-height: 100vh;
-} */
-
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
-
 header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: green;
-  background-color: #fe673a;
+  /* background-color: green;
+  background-color: #fe673a; */
   background-color: #a0d6fa;
   padding: 0px 10%;
   display: flex;
