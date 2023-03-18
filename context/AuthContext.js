@@ -2,7 +2,7 @@
 
 import { useState, createContext } from "react";
 
-const User = {
+const user = {
   id: "",
   firstName: "",
   lastName: "",
@@ -10,21 +10,30 @@ const User = {
   city: "",
   phone: "",
 };
+
 const initialState = {
   loading: false,
   error: null,
   data: null,
 };
 
-const authState = {
-  ...state,
-  setAuthState: () => {},
+const mergeAuthState = (newState) => {
+  return {
+    ...initialState,
+    ...newState,
+  };
 };
+
+const authState = {
+  ...initialState,
+  setAuthState,
+};
+
 const AuthenticationContext = createContext({
   loading: false,
   error: null,
   data: null,
-  setAuthState: () => {},
+  // setAuthState: () => {},
 });
 
 export default function AuthContext({ children }) {
