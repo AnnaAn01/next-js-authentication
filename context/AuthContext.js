@@ -10,13 +10,22 @@ const User = {
   city: "",
   phone: "",
 };
-const AuthState = {
+const initialState = {
   loading: false,
   error: null,
   data: null,
 };
 
-const AuthenticationContext = createContext();
+const authState = {
+  ...state,
+  setAuthState: () => {},
+};
+const AuthenticationContext = createContext({
+  loading: false,
+  error: null,
+  data: null,
+  setAuthState: () => {},
+});
 
 export default function AuthContext({ children }) {
   const [authState, setAuthState] = useState({
@@ -24,5 +33,9 @@ export default function AuthContext({ children }) {
     data: null,
     error: null,
   });
-  return <div>{children}</div>;
+  return (
+    <AuthenticationContext.Provider value={authState}>
+      {children}
+    </AuthenticationContext.Provider>
+  );
 }
