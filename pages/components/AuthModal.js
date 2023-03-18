@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthenticationContext } from "@/context/AuthContext2";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -20,6 +21,9 @@ const style = {
 };
 
 export default function AuthModal({ isSignin }) {
+  const { error, loading, data, setAuthState } = useContext(
+    AuthenticationContext
+  );
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -91,6 +95,17 @@ export default function AuthModal({ isSignin }) {
             <div className="modal-box-1">
               <p className="modal-box-p">
                 {`${isSignin ? "Sign In" : "Create Account"}`}
+                {/* <h1
+                  onClick={() => {
+                    setAuthState({
+                      data,
+                      loading,
+                      error: "byebye",
+                    });
+                  }}
+                >
+                  {error}
+                </h1> */}
               </p>
             </div>
             <div className="modal-box-2">
