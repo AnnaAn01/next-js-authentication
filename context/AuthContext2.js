@@ -11,7 +11,8 @@ export const AuthenticationContext = createContext({
 
 export default function AuthContext({ children }) {
   const [authState, setAuthState] = useState({
-    loading: true,
+    loading: false,
+    // loading: true,
     data: null,
     error: "Hello",
   });

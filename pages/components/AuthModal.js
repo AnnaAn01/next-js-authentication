@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import AuthModalInputs from "./AuthModalInputs";
 import useAuth from "@/hooks/useAuth";
+import { CircularProgress } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -21,9 +22,7 @@ const style = {
 };
 
 export default function AuthModal({ isSignin }) {
-  const { error, loading, data, setAuthState } = useContext(
-    AuthenticationContext
-  );
+  const { loading, data, error } = useContext(AuthenticationContext);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -91,11 +90,17 @@ export default function AuthModal({ isSignin }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div className="modal-box-wrapper">
-            <div className="modal-box-1">
-              <p className="modal-box-p">
-                {`${isSignin ? "Sign In" : "Create Account"}`}
-                {/* <h1
+          {loading ? (
+            <div className="modal-box-wrapper">
+              <CircularProgress />
+            </div>
+          ) : (
+            // <CircularProgress />
+            <div className="modal-box-wrapper">
+              <div className="modal-box-1">
+                <p className="modal-box-p">
+                  {`${isSignin ? "Sign In" : "Create Account"}`}
+                  {/* <h1
                   onClick={() => {
                     setAuthState({
                       data,
@@ -106,26 +111,29 @@ export default function AuthModal({ isSignin }) {
                 >
                   {error}
                 </h1> */}
-              </p>
+                </p>
+              </div>
+              <div className="modal-box-2">
+                <h2 className="modal-box-title-2">{`${
+                  isSignin ? "Log Into Your Account" : "Create Your Account"
+                }`}</h2>
+                <AuthModalInputs
+                  inputs={inputs}
+                  handleChangeInput={handleChangeInput}
+                  isSignin={isSignin}
+                />
+                <button
+                  className={
+                    disabled
+                      ? "modal-last-button disabled"
+                      : "modal-last-button"
+                  }
+                  disabled={disabled}
+                  onClick={handleClick}
+                >{`${isSignin ? "Sign In" : "Create Account"}`}</button>
+              </div>
             </div>
-            <div className="modal-box-2">
-              <h2 className="modal-box-title-2">{`${
-                isSignin ? "Log Into Your Account" : "Create Your Account"
-              }`}</h2>
-              <AuthModalInputs
-                inputs={inputs}
-                handleChangeInput={handleChangeInput}
-                isSignin={isSignin}
-              />
-              <button
-                className={
-                  disabled ? "modal-last-button disabled" : "modal-last-button"
-                }
-                disabled={disabled}
-                onClick={handleClick}
-              >{`${isSignin ? "Sign In" : "Create Account"}`}</button>
-            </div>
-          </div>
+          )}
         </Box>
       </Modal>
     </div>
