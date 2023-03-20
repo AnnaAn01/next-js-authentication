@@ -97,9 +97,11 @@ export default function AuthModal({ isSignin }) {
           ) : (
             // <CircularProgress />
             <div className="modal-box-wrapper">
-              <Alert className="alert-message" severity="error">
-                This is an error alert — check it out!
-              </Alert>
+              {error ? (
+                <Alert className="alert-message" severity="error">
+                  {error}
+                </Alert>
+              ) : null}
               <div className="modal-box-1">
                 <p className="modal-box-p">
                   {`${isSignin ? "Sign In" : "Create Account"}`}

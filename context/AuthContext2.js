@@ -14,7 +14,7 @@ export default function AuthContext({ children }) {
     loading: false,
     // loading: true,
     data: null,
-    error: "Hello",
+    error: null,
   });
 
   //   const fetchUser = async () => {
