@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useContext } from "react";
-import { AuthenticationContext } from "@/context/AuthContext2";
+import { AuthenticationContext } from "../../context/AuthContext2";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -28,13 +28,6 @@ export default function AuthModal({ isSignin }) {
   const handleClose = () => setOpen(false);
   const { signin } = useAuth();
 
-  const handleChangeInput = (e) => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
@@ -43,6 +36,13 @@ export default function AuthModal({ isSignin }) {
     city: "",
     password: "",
   });
+
+  const handleChangeInput = (e) => {
+    setInputs({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const [disabled, setDisabled] = useState(true);
   // we can use useEffect here because this is a client base component
@@ -69,7 +69,7 @@ export default function AuthModal({ isSignin }) {
 
   const handleClick = () => {
     if (isSignin) {
-      signin({ email: inputs.email, password: inputs.password });
+      signin({ email: inputs.email, password: inputs.password }, handleClose);
     }
   };
 

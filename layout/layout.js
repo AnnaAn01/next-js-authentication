@@ -1,6 +1,6 @@
 // import NavBar from "./components/NavBar";
 import Navbar from "../pages/components/Navbar";
-import AuthContext from "../context/AuthContext2";
+import { AuthContext } from "../context/AuthContext2";
 // import "./globals.css";
 // import "react-datepicker/dist/react-datepicker.css";
 export const metadata = {

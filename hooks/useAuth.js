@@ -1,4 +1,4 @@
-import { AuthenticationContext } from "@/context/AuthContext2";
+import { AuthenticationContext } from "../context/AuthContext2";
 import axios from "axios";
 import { useContext } from "react";
 
@@ -6,7 +6,7 @@ const useAuth = () => {
   const { data, error, loading, setAuthState } = useContext(
     AuthenticationContext
   );
-  const signin = async ({ email, password }) => {
+  const signin = async ({ email, password }, handleClose) => {
     setAuthState({
       data: null,
       error: null,
@@ -27,6 +27,7 @@ const useAuth = () => {
         error: null,
         loading: false,
       });
+      handleClose();
     } catch (error) {
       // console.log(error.response.data.errorMessage);
       setAuthState({
