@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import AuthModalInputs from "./AuthModalInputs";
 import useAuth from "@/hooks/useAuth";
-import { CircularProgress } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -97,6 +97,9 @@ export default function AuthModal({ isSignin }) {
           ) : (
             // <CircularProgress />
             <div className="modal-box-wrapper">
+              <Alert className="alert-message" severity="error">
+                This is an error alert — check it out!
+              </Alert>
               <div className="modal-box-1">
                 <p className="modal-box-p">
                   {`${isSignin ? "Sign In" : "Create Account"}`}

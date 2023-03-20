@@ -229,3 +229,7 @@ header label {
 .disabled {
   background-color: gray;
 }
+
+.alert-message {
+  margin-bottom: 10px;
+}
