@@ -13,7 +13,6 @@ const useAuth = () => {
       loading: true,
     });
     try {
-      // also supply a request body
       const response = await axios.post(
         "http://localhost:3000/api/auth/signin",
         {
@@ -21,7 +20,7 @@ const useAuth = () => {
           password,
         }
       );
-      // console.log(response);
+
       setAuthState({
         data: response.data, // the user that we get back
         error: null,
