@@ -11,28 +11,6 @@ export default async function handler(req, res) {
     const { email, password } = req.body;
     const errors = [];
 
-    const validationSchema = [
-      {
-        valid: validator.isEmail(email),
-        errorMessage: "Email is invalid",
-      },
-      {
-        valid: validator.isLength(password, { min: 1 }),
-        errorMessage: "Password is invalid",
-      },
-    ];
-
-    validationSchema.forEach((check) => {
-      if (!check.valid) {
-        errors.push(check.errorMessage);
-      }
-    });
-
-    if (errors.length) {
-      res.status(400).json({ errorMessage: errors[0] });
-    }
-
-    // check if the user already has an account with us
     const user = [
       {
         firstName: "Anna",
@@ -51,7 +29,42 @@ export default async function handler(req, res) {
         password: "password",
       },
     ];
+
     const userWithEmail = user.find((el) => el.email === email);
+
+    const validationSchema = [
+      {
+        valid: validator.isEmail(email),
+        errorMessage: "Email is invalid",
+      },
+      {
+        valid:
+          userWithEmail && validator.equals(password, userWithEmail.password),
+        errorMessage: "Invalid email or password",
+      },
+
+      // {
+      //   valid: validator.equals(password, user[0].password),
+      //   errorMessage: "Password is invalid",
+      // },
+      // {
+      //   valid: validator.isLength(password, { min: 1 }),
+      //   errorMessage: "Password is invalid",
+      // },
+    ];
+
+    validationSchema.forEach((check) => {
+      if (!check.valid) {
+        errors.push(check.errorMessage);
+      }
+    });
+
+    if (errors.length) {
+      res.status(400).json({ errorMessage: errors[0] });
+    }
+
+    // check if the user already has an account with us
+
     // console.log(userWithEmail.password);
     // if (userWithEmail) {
     //   return res.status(400).json({ errorMessage: "User found" });
