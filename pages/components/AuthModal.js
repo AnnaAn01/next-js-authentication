@@ -107,17 +107,10 @@ export default function AuthModal({ isSignin }) {
               <div className="modal-box-1">
                 <p className="modal-box-p">
                   {`${isSignin ? "Sign In" : "Create Account"}`}
-                  {/* <h1
-                  onClick={() => {
-                    setAuthState({
-                      data,
-                      loading,
-                      error: "byebye",
-                    });
-                  }}
-                >
-                  {error}
-                </h1> */}
+                </p>
+                <p>
+                  {data?.firstName}
+                  {data?.lastName}
                 </p>
               </div>
               <div className="modal-box-2">

@@ -104,11 +104,11 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       // extract and pass back the user themselves
-      firstName: userWithEmail.firstName,
-      lastName: userWithEmail.lastName,
-      email: userWithEmail.email,
-      phone: userWithEmail.phone,
-      city: userWithEmail.city,
+      // firstName: userWithEmail.firstName,
+      // lastName: userWithEmail.lastName,
+      // email: userWithEmail.email,
+      // phone: userWithEmail.phone,
+      // city: userWithEmail.city,
     });
   }
   // if the if statement is not satisfied
