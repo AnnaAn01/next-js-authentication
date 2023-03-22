@@ -1,6 +1,7 @@
 import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
+import { setCookie } from "cookies-next";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -99,8 +100,15 @@ export default async function handler(req, res) {
       .setExpirationTime("24H")
       .sign(secret);
 
+    setCookie("jwt", token, { req, res, maxAge: 60 * 6 * 24 });
+
     return res.status(200).json({
-      token: token,
+      // extract and pass back the user themselves
+      firstName: userWithEmail.firstName,
+      lastName: userWithEmail.lastName,
+      email: userWithEmail.email,
+      phone: userWithEmail.phone,
+      city: userWithEmail.city,
     });
   }
   // if the if statement is not satisfied

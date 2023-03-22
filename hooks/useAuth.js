@@ -36,7 +36,43 @@ const useAuth = () => {
       });
     }
   };
-  const signup = async () => {};
+  const signup = async (
+    { email, password, firstName, lastName, city, phone },
+    handleClose
+  ) => {
+    setAuthState({
+      data: null,
+      error: null,
+      loading: true,
+    });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/signup",
+        {
+          email,
+          password,
+          firstName,
+          lastName,
+          city,
+          phone,
+        }
+      );
+
+      setAuthState({
+        data: response.data, // the user that we get back
+        error: null,
+        loading: false,
+      });
+      handleClose();
+    } catch (error) {
+      // console.log(error.response.data.errorMessage);
+      setAuthState({
+        data: null, // the user that we get back
+        error: error.response.data.errorMessage,
+        loading: false,
+      });
+    }
+  };
 
   return {
     signin,
