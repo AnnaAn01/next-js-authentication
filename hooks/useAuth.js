@@ -96,18 +96,28 @@ const useAuth = () => {
           Authorization: `Bearer ${jwt}`,
         },
       });
+      // console.log(response);
+      // this will ensure that after the above request we want the bearer token to always be here
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
       setAuthState({
         data: response.data,
         error: null,
         loading: false,
       });
-    } catch (error) {}
+    } catch (error) {
+      setAuthState({
+        data: null,
+        error: error.response.data.errorMessage,
+        loading: false,
+      });
+    }
   };
 
   return {
     signin,
     signup,
+    fetchUser,
   };
 };
 

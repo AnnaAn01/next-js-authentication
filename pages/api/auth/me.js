@@ -61,7 +61,7 @@ export default async function handler(req, res) {
   //   find the data from the db, we're do this locally for now
   //   maybe reutn selectively, don't return the password for the real app
   const userWithEmail = user.find((el) => el.email === payload.email);
-  return res.json({ userWithEmail });
+  // return res.json({ userWithEmail });
   //   this is what we get after this
   // {
   //     "userWithEmail": {
@@ -74,5 +74,18 @@ export default async function handler(req, res) {
   //     }
   // }
 
-  //   return res.json({ me: payload });
+  if (!userWithEmail) {
+    return res.status(401).json({
+      errorMessage: "User not found",
+    });
+  }
+
+  return res.json({
+    firstName: userWithEmail.firstName,
+    lastName: userWithEmail.lastName,
+    email: userWithEmail.email,
+    phone: userWithEmail.phone,
+    city: userWithEmail.city,
+    password: userWithEmail.password,
+  });
 }
