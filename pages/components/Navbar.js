@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import AuthModal from "../components/AuthModal";
 import AuthModalInputs from "../components/AuthModalInputs";
+import { useContext } from "react";
+import { AuthenticationContext } from "@/context/AuthContext2";
+import useAuth from "@/hooks/useAuth";
 
 // import "./Navbar.css";
 // import { RiArrowDownSLine } from "react-icons/ri";
 
 const Navbar2 = () => {
+  const { data, loading } = useContext(AuthenticationContext);
+  const { signout } = useAuth();
   return (
     <header>
       <Link href="#" className="logo">
@@ -55,10 +62,22 @@ const Navbar2 = () => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
-          <div className="sign-up-in-wrapper">
-            <AuthModal isSignin={true} />
-            <AuthModal isSignin={false} />
-          </div>
+          <>
+            {loading ? null : (
+              <div className="sign-up-in-wrapper">
+                {data ? (
+                  <button className="signup-modal-button" onClick={signout}>
+                    Sign out
+                  </button>
+                ) : (
+                  <>
+                    <AuthModal isSignin={true} />
+                    <AuthModal isSignin={false} />
+                  </>
+                )}
+              </div>
+            )}
+          </>
         </ul>
       </nav>
     </header>

@@ -13,7 +13,7 @@ export const AuthenticationContext = createContext({
 
 export function AuthContext({ children }) {
   const [authState, setAuthState] = useState({
-    loading: false,
+    loading: true,
     // loading: true,
     data: null,
     error: null,

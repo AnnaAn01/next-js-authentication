@@ -1,12 +1,10 @@
 import { AuthenticationContext } from "../context/AuthContext2";
 import axios from "axios";
 import { useContext } from "react";
-import { getCookie } from "cookies-next";
+import { getCookie, removeCookies } from "cookies-next";
 
 const useAuth = () => {
-  const { data, error, loading, setAuthState } = useContext(
-    AuthenticationContext
-  );
+  const { setAuthState } = useContext(AuthenticationContext);
   const signin = async ({ email, password }, handleClose) => {
     setAuthState({
       data: null,
@@ -75,49 +73,20 @@ const useAuth = () => {
     }
   };
 
-  const fetchUser = async () => {
+  const signout = () => {
+    removeCookies("jwt");
+
     setAuthState({
-      data: null,
+      data: null, // the user that we get back
       error: null,
-      loading: true,
+      loading: false,
     });
-    try {
-      const jwt = getCookie("jwt");
-      if (!jwt) {
-        return setAuthState({
-          data: null,
-          error: null,
-          loading: false,
-        });
-      }
-
-      const response = await axios.get("http://localhost:3000/api/auth/me", {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      // console.log(response);
-      // this will ensure that after the above request we want the bearer token to always be here
-      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-
-      setAuthState({
-        data: response.data,
-        error: null,
-        loading: false,
-      });
-    } catch (error) {
-      setAuthState({
-        data: null,
-        error: error.response.data.errorMessage,
-        loading: false,
-      });
-    }
   };
 
   return {
     signin,
     signup,
-    fetchUser,
+    signout,
   };
 };
 
