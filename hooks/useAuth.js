@@ -1,7 +1,7 @@
 import { AuthenticationContext } from "../context/AuthContext2";
 import axios from "axios";
 import { useContext } from "react";
-import { getCookie, removeCookies } from "cookies-next";
+import { getCookie, deleteCookie } from "cookies-next";
 
 const useAuth = () => {
   const { setAuthState } = useContext(AuthenticationContext);
@@ -74,7 +74,7 @@ const useAuth = () => {
   };
 
   const signout = () => {
-    removeCookies("jwt");
+    deleteCookie("jwt");
 
     setAuthState({
       data: null, // the user that we get back
