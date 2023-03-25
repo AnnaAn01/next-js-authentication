@@ -30,8 +30,14 @@ export default async function handler(req, res) {
   // }
 
   //   now that we've verified the token we use jwt to decode the token
-  const bearerToken = req.headers["authorization"];
-  const token = bearerToken.split(" ")[1];
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    return res.status(401).json({
+      errorMessage: "Unauthorized request (no token)",
+    });
+  }
+
   const payload = jwt.decode(token);
   if (!payload.email) {
     return res.status(401).json({
