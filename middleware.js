@@ -68,6 +68,177 @@
 //   matcher: ["/dashboard"],
 // };
 
+// import * as jose from "jose";
+// import { NextResponse } from "next/server";
+// import cookie from "cookie";
+
+// export async function middleware(req, res) {
+//   const cookies = cookie.parse(req.headers.get("cookie") || "");
+//   const token = cookies.jwt;
+//   let url = req.url;
+
+//   if (!token && url.includes("/dashboard")) {
+//     // return NextResponse.json({ message: "Auth required, !!" }, { status: 401 });
+//     return NextResponse.redirect("http://localhost:3000/signindash");
+//   }
+//   if (token && url.includes("/signindash")) {
+//     return NextResponse.redirect("http://localhost:3000/dashboard");
+//   }
+
+//   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+//   try {
+//     await jose.jwtVerify(token, secret);
+//   } catch (error) {
+//     return NextResponse.json(
+//       { message: "Auth required, this" },
+//       { status: 401 }
+//     );
+//   }
+// }
+
+// export const config = {
+//   matcher: ["/api/auth/me"],
+//   matcher: ["/dashboard"],
+// };
+
+// import * as jose from "jose";
+// import { NextResponse } from "next/server";
+// import cookie from "cookie";
+
+// export async function middleware(req, res) {
+//   const cookies = cookie.parse(req.headers.get("cookie") || "");
+//   const token = cookies.jwt;
+//   let url = req.url;
+
+//   if (token && url.includes("/signindash")) {
+//     return NextResponse.redirect("http://localhost:3000/dashboard");
+//   }
+
+//   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+//   try {
+//     await jose.jwtVerify(token, secret);
+//     if (url.includes("/signindash")) {
+//       return NextResponse.redirect("http://localhost:3000/dashboard");
+//     }
+//   } catch (error) {
+//     if (url.includes("/dashboard")) {
+//       return NextResponse.redirect("http://localhost:3000/signindash");
+//     }
+//     return NextResponse.json(
+//       { message: "Auth required, this" },
+//       { status: 401 }
+//     );
+//   }
+// }
+
+// export const config = {
+//   matcher: ["/api/auth/me"],
+//   matcher: ["/dashboard"],
+// };
+
+// import * as jose from "jose";
+// import { NextResponse } from "next/server";
+// import cookie from "cookie";
+
+// export async function middleware(req, res) {
+//   const cookies = cookie.parse(req.headers.get("cookie") || "");
+//   const token = cookies.jwt;
+//   let url = req.url;
+
+//   if (token && url.includes("/signindash")) {
+//     return NextResponse.redirect("http://localhost:3000/dashboard");
+//   }
+
+//   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+//   try {
+//     if (url.includes("/dashboard")) {
+//       await jose.jwtVerify(token, secret);
+//     }
+//   } catch (error) {
+//     if (url.includes("/dashboard")) {
+//       return NextResponse.redirect("http://localhost:3000/signindash");
+//     }
+//     return NextResponse.json(
+//       { message: "Auth required, this" },
+//       { status: 401 }
+//     );
+//   }
+// }
+
+// export const config = {
+//   matcher: ["/api/auth/me"],
+//   matcher: ["/dashboard"],
+// };
+
+// import * as jose from "jose";
+// import { NextResponse } from "next/server";
+// import cookie from "cookie";
+
+// export async function middleware(req, res) {
+//   const cookies = cookie.parse(req.headers.get("cookie") || "");
+//   const token = cookies.jwt;
+//   let url = req.url;
+
+//   // If the user is authenticated and on the signindash page, redirect to dashboard
+//   if (token && url.includes("/signindash")) {
+//     return NextResponse.redirect("http://localhost:3000/dashboard");
+//   }
+
+//   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+//   try {
+//     await jose.jwtVerify(token, secret);
+//   } catch (error) {
+//     // If the user is not authenticated and on the dashboard page, redirect to signindash
+//     if (url.includes("/dashboard")) {
+//       return NextResponse.redirect("http://localhost:3000/signindash");
+//     }
+//     return NextResponse.json(
+//       { message: "Auth required, this" },
+//       { status: 401 }
+//     );
+//   }
+// }
+
+// export const config = {
+//   matcher: ["/api/auth/me"],
+//   matcher: ["/dashboard"],
+// };
+
+// import * as jose from "jose";
+// import { NextResponse } from "next/server";
+// import cookie from "cookie";
+
+// export async function middleware(req, res) {
+//   const cookies = cookie.parse(req.headers.get("cookie") || "");
+//   const token = cookies.jwt;
+//   const url = req.url;
+
+//   if (token && url.includes("/signindash")) {
+//     return NextResponse.redirect("http://localhost:3000/dashboard");
+//   }
+
+//   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+//   try {
+//     await jose.jwtVerify(token, secret);
+//     if (url.includes("/signindash")) {
+//       return NextResponse.redirect("http://localhost:3000/dashboard");
+//     }
+//   } catch (error) {
+//     if (url.includes("/dashboard")) {
+//       return NextResponse.redirect("http://localhost:3000/signindash");
+//     }
+//     return NextResponse.json(
+//       { message: "Auth required, this" },
+//       { status: 401 }
+//     );
+//   }
+// }
+
+// export const config = {
+//   matcher: ["/api/auth/me"],
+//   matcher: ["/dashboard"],
+// };
+
 import * as jose from "jose";
 import { NextResponse } from "next/server";
 import cookie from "cookie";
@@ -75,19 +246,13 @@ import cookie from "cookie";
 export async function middleware(req, res) {
   const cookies = cookie.parse(req.headers.get("cookie") || "");
   const token = cookies.jwt;
-
-  if (!token) {
-    return NextResponse.json({ message: "Auth required, !!" }, { status: 401 });
+  const url = req.url;
+  if (!token && url.includes("/dashboard")) {
+    return NextResponse.redirect("http://localhost:3000/signindash");
   }
 
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-  try {
-    await jose.jwtVerify(token, secret);
-  } catch (error) {
-    return NextResponse.json(
-      { message: "Auth required, this" },
-      { status: 401 }
-    );
+  if (token && url === "http://localhost:3000/signindash") {
+    return NextResponse.redirect("http://localhost:3000/dashboard");
   }
 }
 

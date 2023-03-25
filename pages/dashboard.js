@@ -1,6 +1,11 @@
 import React from "react";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { AuthenticationContext } from "@/context/AuthContext2";
 
 const dashboard = () => {
+  const { data, loading } = useContext(AuthenticationContext);
+
   return (
     <div className="dashboard-signin-wrapper">
       This is the dashboard for Signed in only Lorem ipsum dolor sit amet

@@ -17,6 +17,20 @@ export default function Home() {
       </Head> */}
       <main className={styles.main}>
         <Navbar />
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo
+          dicta culpa voluptas accusamus. Blanditiis distinctio porro, omnis
+          soluta eaque nam. Possimus hic quam officiis harum eaque
+          exercitationem vitae doloremque ipsum optio dicta facilis beatae
+          corporis quis, neque impedit id dolore repellendus consectetur soluta
+          non ad tenetur cum porro. Assumenda iure praesentium maiores illum.
+          Soluta sunt delectus velit inventore libero fugiat. Est saepe quisquam
+          inventore, culpa accusantium possimus dolor excepturi nulla optio rem
+          rerum modi reprehenderit deserunt explicabo nam eligendi magnam eos ea
+          quibusdam minus architecto necessitatibus iusto! Mollitia delectus
+          unde, sit molestias ullam vitae doloremque! Sapiente veniam aspernatur
+          veritatis! Dolore?
+        </div>
       </main>
     </>
   );

@@ -81,6 +81,7 @@ const useAuth = () => {
       error: null,
       loading: false,
     });
+    window.location.reload();
   };
 
   return {

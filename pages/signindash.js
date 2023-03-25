@@ -6,13 +6,20 @@ import AuthModalInputs from "./components/AuthModalInputs";
 import { AuthenticationContext } from "@/context/AuthContext2";
 import AuthModal from "./components/AuthModal";
 
+import { useRouter } from "next/router";
+
 const DashboardSignIn = () => {
   const { data, loading } = useContext(AuthenticationContext);
   const { signout } = useAuth();
+  const router = useRouter();
+
+  if (data) {
+    router.push("/dashboard");
+  }
 
   return (
     <>
-      <h1 className="dashboard">dashboard</h1>
+      <h1 className="dashboard">Sign in to dashboard</h1>
       <div className="dashboard-signin-wrapper">
         {loading ? null : (
           <div className="sign-up-in-wrapper">
