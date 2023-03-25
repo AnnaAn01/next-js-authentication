@@ -2,6 +2,9 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
 import { setCookie } from "cookies-next";
+import { useRouter } from "next/router";
+
+import { redirect } from "next/navigation";
 
 export default async function handler(req, res) {
   //  this is a POST request
@@ -93,6 +96,7 @@ export default async function handler(req, res) {
         .status(401)
         .json({ errorMessage: "Email or password is invalid!!" });
     }
+
     // if reached to this point, then everything is fine
     // create a jwt
     const alg = "HS256";
@@ -106,8 +110,58 @@ export default async function handler(req, res) {
 
     setCookie("jwt", token, { req, res, maxAge: 60 * 6 * 24 });
 
+    //     // create a router instance
+    //     const router = useRouter();
+
+    //     // push the user to the dashboard page
+    //     router.push("/dashboard");
+
+    //     // return a success response
+    //     return res.status(200).json({
+    //       firstName: userWithEmail.firstName,
+    //       lastName: userWithEmail.lastName,
+    //       email: userWithEmail.email,
+    //       phone: userWithEmail.phone,
+    //       city: userWithEmail.city,
+    //     });
+
+    //     // return {
+    //     //   redirect: {
+    //     //     destination: "/dashboard",
+    //     //     permanent: false,
+    //     //   },
+    //     // };
+    //     // redirect("/dashboard");
+
+    //     // const router = useRouter();
+    //     // router.push("/dashboard");
+
+    //     // redirect to the dashboard after successful sign-in
+    //     // return res.redirect("/dashboard");
+
+    //     // return res.redirect("/dashboard");
+
+    //     // return res.status(200).json({
+    //     //   // extract and pass back the user themselves
+    //     //   firstName: userWithEmail.firstName,
+    //     //   lastName: userWithEmail.lastName,
+    //     //   email: userWithEmail.email,
+    //     //   phone: userWithEmail.phone,
+    //     //   city: userWithEmail.city,
+    //     // });
+    //   }
+    //   // if the if statement is not satisfied
+    //   return res.status(404).json("Unknown endpoint");
+    // }
+
+    // create a router instance
+    // const router = useRouter();
+
+    // // push the user to the dashboard page
+    // router.push("/dashboard");
+
+    // return a success response
     return res.status(200).json({
-      // extract and pass back the user themselves
       firstName: userWithEmail.firstName,
       lastName: userWithEmail.lastName,
       email: userWithEmail.email,
@@ -115,6 +169,6 @@ export default async function handler(req, res) {
       city: userWithEmail.city,
     });
   }
-  // if the if statement is not satisfied
+
   return res.status(404).json("Unknown endpoint");
 }

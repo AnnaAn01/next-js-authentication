@@ -8,6 +8,7 @@ export async function middleware(req, res) {
   // extracting jwt from the header
 
   const bearerToken = req.headers.get("authorization");
+  console.log(bearerToken);
   //   check if the header exists
   if (!bearerToken) {
     // return res.status(401).json({
@@ -38,12 +39,48 @@ export async function middleware(req, res) {
 }
 
 // middleware will be called everywhere, even where it's not needed
-// so, we'll prevent it from being called unnecessarily by exporting a config that has an object with a matcher. We'll specify here all of the different routes that we want this middleware to match with
+// so, we'll prevent it from being called unnecessarily by exporting a config that has an object with a matcher.
+// We'll specify here all of the different routes that we want this middleware to match with
 export const config = {
   matcher: ["/api/auth/me"],
+  // matcher: ["/dashboard"],
 };
 
 // too add another api request, another endpoint, we just add like below
 // export const config = {
 //   matcher: ["/api/auth/me", "/api/auth/other"],
+// };
+
+// CHATGPT code below
+
+// import * as jose from "jose";
+// import { NextResponse } from "next/server";
+
+// export async function middleware(req, res) {
+//   console.log("I am the middleware and I was called before the endpoint");
+
+//   const bearerToken = req.headers.get("authorization");
+//   console.log(bearerToken);
+
+//   if (!bearerToken) {
+//     return NextResponse.json({ message: "Auth required" }, { status: 401 });
+//   }
+
+//   const token = bearerToken.split(" ")[1];
+
+//   if (!token) {
+//     return NextResponse.json({ message: "Auth required" }, { status: 401 });
+//   }
+
+//   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+//   try {
+//     await jose.jwtVerify(token, secret);
+//   } catch (error) {
+//     return NextResponse.json({ message: "Auth required" }, { status: 401 });
+//   }
+// }
+
+// export const config = {
+//   matcher: ["/api/auth/me"],
+//   matcher: ["/api/auth/dashboard"],
 // };
