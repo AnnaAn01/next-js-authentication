@@ -86,12 +86,10 @@ export default async function handler(req, res) {
     });
   }
 
+  // return <div>something here</div>;
+
   return res.json({
     firstName: userWithEmail.firstName,
     lastName: userWithEmail.lastName,
-    email: userWithEmail.email,
-    phone: userWithEmail.phone,
-    city: userWithEmail.city,
-    password: userWithEmail.password,
   });
 }

@@ -15,7 +15,7 @@ const Navbar2 = () => {
   const { signout } = useAuth();
   return (
     <header>
-      <Link href="#" className="logo">
+      <Link href="/" className="logo">
         LOGO
       </Link>
       <input type="checkbox" id="menu-bar" />
